@@ -4,14 +4,16 @@
 
 //#include <plib.h> //not sure what this is, not used in this program
 //#include <p32xxxx.h> //not sure what's in here.....
-#include <WF_Config.h>
-#include <TCPIP MRF24W.h> //depends on Compiler.h
+//#include <WF_Config.h>
+//#include <TCPIP MRF24W.h> //depends on Compiler.h
 
 int main(void) {
 
     UART_setup();
-    
-    SendDataBuffer("Hello World!\r\n", sizeof("Hello World!\r\n"));
+
+    char *statement = "Hello World!\n\r";
+
+    putsUART1(statement);
 
     //LED_test();
 

@@ -73,7 +73,7 @@
 #define UART_MODULE_ID UART1 // PIM is connected to WF32 through UART1 module
 
 // Function Prototypes
-void SendDataBuffer(const char *buffer, UINT32 size);
+void SendDataBuffer(const char *buffer);
 UINT32 ReadKeyboard(void);
 UINT32 GetDataBuffer(char *buffer, UINT32 max_size);
 
@@ -121,16 +121,17 @@ const UINT32 lineControl[] =
 // *****************************************************************************
 // void UARTTxBuffer(char *buffer, UINT32 size)
 // *****************************************************************************
-void SendDataBuffer(const char *buffer, UINT32 size)
+void SendDataBuffer(const char *buffer)
 {
-    while(size)
+    char mander = buffer;
+
+    while(mander != '\0')
     {
         while(!UARTTransmitterIsReady(UART_MODULE_ID));
 
-        UARTSendDataByte(UART_MODULE_ID, *buffer);
+        UARTSendDataByte(UART_MODULE_ID, mander);
 
-        buffer++;
-        size--;
+        mander++;
     }
 
     while(!UARTTransmissionHasCompleted(UART_MODULE_ID));
@@ -176,7 +177,7 @@ UINT32 ReadKeyboard(void)
 
     menu_item -= '0';
 
-    SendDataBuffer("\r\n",strlen("\r\n"));
+    SendDataBuffer("\r\n");
 
     return (UINT32)menu_item;
 }
